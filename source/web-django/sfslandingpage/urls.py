@@ -27,7 +27,7 @@ from aboutUss.views import aboutUssViewSet
 router = DefaultRouter()
 router.register(r'hero', heroViewSet, basename='hero')
 router.register(r'logo', logoViewSet, basename='logo')
-router.register(r'aboutUss', aboutUssViewSet, basename='aboutUss')
+router.register(r'about', aboutUssViewSet, basename='aboutUss')
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/', include(router.urls)),
