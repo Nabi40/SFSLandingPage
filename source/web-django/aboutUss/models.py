@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.timezone import now
 
-class aboutUs(models.Model):
+class aboutUss(models.Model):
     about_description = models.CharField(max_length=255, default="Default description statement")
     slide_image1 = models.ImageField(upload_to='slide_image1/', blank=True, null=True)
     slide_image2 = models.ImageField(upload_to='slide_image2/', blank=True, null=True)

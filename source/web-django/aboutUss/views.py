@@ -1,10 +1,10 @@
 from rest_framework import viewsets
-from .models import aboutUS
-from .serializers import aboutUSSerializer
+from .models import aboutUss
+from .serializers import aboutUssSerializer
 
-class aboutUSViewSet(viewsets.ModelViewSet):
-    queryset = aboutUS.objects.all()
-    serializer_class = aboutUSSerializer
+class aboutUssViewSet(viewsets.ModelViewSet):
+    queryset = aboutUss.objects.all()
+    serializer_class = aboutUssSerializer
 
     def partial_update(self, request, *args, **kwargs):
             """Handle PATCH requests for partial updates."""
