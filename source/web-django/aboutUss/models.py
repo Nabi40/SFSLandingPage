@@ -1,27 +1,35 @@
 from django.db import models
-from django.utils.timezone import now
+
+class SlideImage(models.Model):
+    image = models.ImageField(upload_to="slide_images/", blank=True, null=True)
+
+    def __str__(self):
+        return self.image.url if self.image else "No Image"
+
 
 class aboutUss(models.Model):
     about_description = models.CharField(max_length=255, default="Default description statement")
-    slide_image1 = models.ImageField(upload_to='slide_image1/', blank=True, null=True)
-    slide_image2 = models.ImageField(upload_to='slide_image2/', blank=True, null=True)
-    slide_image3 = models.ImageField(upload_to='slide_image3/', blank=True, null=True)
+
+    def __str__(self):
+        return self.about_description
+
+
+class Mission_vision(models.Model):
     our_mission = models.CharField(max_length=255, default="Default mission statement")
     our_vision = models.CharField(max_length=255, default="Default vision statement")
 
-    we_values = models.CharField(max_length=50, default="Default statement")
-    values_title1 = models.CharField(max_length=50, default="Default statement")
-    values_description1 = models.CharField(max_length=255, default="Default statement")
-    values_title2 = models.CharField(max_length=50, default="Default statement")
-    values_description2 = models.CharField(max_length=255, default="Default statement")
-    values_title3 = models.CharField(max_length=50, default="Default statement")
-    values_description3 = models.CharField(max_length=255, default="Default statement")
-    values_title4 = models.CharField(max_length=50, default="Default statement")
-    values_description4 = models.CharField(max_length=255, default="Default statement")
-    # created_at = models.DateTimeField(auto_now_add=True, default=now)
-    # updated_at = models.DateTimeField(auto_now=True, default=now)
 
+class Value(models.Model):
+    value_description = models.CharField(max_length=255, default="Default statement")
+    title = models.CharField(max_length=50, default="Default statement")
+    description = models.CharField(max_length=255, default="Default statement")
+    
+
+
+class ExecutiveTeam(models.Model):
+    about_uss = models.ForeignKey(aboutUss, related_name="executive_team", on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    position = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.title
-
+        return f"{self.name} - {self.position}"
