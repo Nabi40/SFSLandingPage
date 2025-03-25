@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import aboutUss, SlideImage, Mission_vision, Value, ExecutiveTeam
+from .models import aboutUss, SlideImage, MissionVision, Value, ExecutiveTeam
 
 class SlideImageSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
@@ -13,9 +13,9 @@ class SlideImageSerializer(serializers.ModelSerializer):
         return request.build_absolute_uri(obj.image.url) if obj.image else None
 
 
-class MissionSerializer(serializers.ModelSerializer):
+class MissionVisionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Mission_vision
+        model = MissionVision
         fields = ["our_mission", "our_vision"]
 
 
@@ -31,10 +31,10 @@ class ExecutiveTeamSerializer(serializers.ModelSerializer):
         fields = ["id", "name", "position"]
 
 
-class aboutUssSerializer(serializers.ModelSerializer):
+class aboutUssSerializer(serializers.ModelSerializer):  
     banner = serializers.SerializerMethodField()
-    mission = MissionSerializer()
-    values = ValueSerializer(many=True)
+    mission = MissionVisionSerializer(many=True)  # Use the exact related_name
+    values = ValueSerializer(many=True)  
     executive_team = ExecutiveTeamSerializer(many=True)
 
     class Meta:
@@ -44,5 +44,5 @@ class aboutUssSerializer(serializers.ModelSerializer):
     def get_banner(self, obj):
         return {
             "description": obj.about_description,
-            "slide_images": SlideImageSerializer(obj.slideimage_set.all(), many=True, context=self.context).data
+            "slide_images": SlideImageSerializer(obj.slide_images.all(), many=True, context=self.context).data
         }
