@@ -31,15 +31,15 @@ class ExecutiveTeamSerializer(serializers.ModelSerializer):
         fields = ["id", "name", "position"]
 
 
-class aboutUssSerializer(serializers.ModelSerializer):  
+class aboutUssSerializer(serializers.ModelSerializer):  # Kept "aboutUss" as per your preference
     banner = serializers.SerializerMethodField()
-    mission = MissionVisionSerializer(many=True)  # Use the exact related_name
-    values = ValueSerializer(many=True)  
+    mission = MissionVisionSerializer(many=True,  read_only=True)  # Changed to match the related name
+    values = ValueSerializer(many=True)  # Should match the related name of the Value model
     executive_team = ExecutiveTeamSerializer(many=True)
 
     class Meta:
         model = aboutUss
-        fields = ["id", "banner", "mission", "values", "executive_team"]
+        fields = "__all__"
 
     def get_banner(self, obj):
         return {
