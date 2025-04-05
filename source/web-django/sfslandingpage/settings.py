@@ -40,10 +40,32 @@ INSTALLED_APPS = [
 
     "rest_framework",
     "hero",
-    "logo",
     "aboutUss"
+    # 'modeladmin_reorder',
+    
 
 ]
+
+
+MODELADMIN_REORDER = (
+    {
+        'app': 'hero',  # usually lowercase
+        'models': [
+            'hero.Heros',
+            # 'hero.CustomerReview',
+            # 'hero.Faqs',
+            
+            # 'hero.OurServices',
+            # 'hero.SlideImages',
+            # 'hero.SlideLogos',
+            # 'hero.StableLogos',
+            # 'hero.WorkDescriptions',
+        ]
+    },
+)
+
+
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
