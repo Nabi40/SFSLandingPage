@@ -28,7 +28,7 @@ class ValueSerializer(serializers.ModelSerializer):
 class ExecutiveTeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExecutiveTeam
-        fields = ["id", "name", "position"]
+        fields = ["id", "name", "position", "description", "profile_image"]
 
 
 class aboutUssSerializer(serializers.ModelSerializer):  # Kept "aboutUss" as per your preference

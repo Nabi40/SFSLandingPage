@@ -26,6 +26,7 @@ class MissionVision(models.Model):
 class Value(models.Model):
     about_uss = models.ForeignKey(aboutUss, related_name="values", on_delete=models.CASCADE)
     value_description = models.CharField(max_length=255, default="Default statement")
+
     title = models.CharField(max_length=50, default="Default statement")
     description = models.CharField(max_length=255, default="Default statement")
 
@@ -37,6 +38,8 @@ class ExecutiveTeam(models.Model):
     about_uss = models.ForeignKey(aboutUss, related_name="executive_team", on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     position = models.CharField(max_length=100)
+    description = models.CharField(max_length=255, default="description description ")
+    profile_image = models.ImageField(upload_to="profile_images/")
 
     def __str__(self):
-        return f"{self.name} - {self.position}"
+        return f"{self.name} - {self.position} - {self.description} - {self.profile_image}"

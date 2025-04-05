@@ -19,14 +19,12 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from hero.views import heroViewSet  # Import your ViewSet
-from logo.views import logoViewSet
 from aboutUss.views import aboutUssViewSet
 
 
 # Initialize the router
 router = DefaultRouter()
 router.register(r'hero', heroViewSet, basename='hero')
-router.register(r'logo', logoViewSet, basename='logo')
 router.register(r'about', aboutUssViewSet, basename='aboutUss')
 urlpatterns = [
     path("admin/", admin.site.urls),
