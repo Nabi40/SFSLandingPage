@@ -18,7 +18,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from hero.views import heroViewSet  # Import your ViewSet
+
+from hero.views import heroViewSet  
 from aboutUss.views import aboutUssViewSet
 
 
@@ -26,7 +27,9 @@ from aboutUss.views import aboutUssViewSet
 router = DefaultRouter()
 router.register(r'hero', heroViewSet, basename='hero')
 router.register(r'about', aboutUssViewSet, basename='aboutUss')
+
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api/', include(router.urls)),
+    path('api/', include('hero.urls')),
+    # path('api/', include(router.urls)),
 ]

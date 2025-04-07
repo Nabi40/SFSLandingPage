@@ -1,34 +1,59 @@
 from django.contrib import admin
-from .models import hero, SlideImage, SlideLogos, StableLogos, OurService, WorkDescription, CustomerReview, FAQ
+from .models import hero, SlideImage, Logos, OurService, WorkDescription, CustomerReview, FAQ, SlideLogo, Service
+
+class SlideImageInline(admin.TabularInline):
+    model = SlideImage
+    extra = 1
 
 @admin.register(hero)
-class HeroAdmin(admin.ModelAdmin):
-    list_display = ("id", "hero_title", "hero_description")  # Only using id until you confirm field names
+class heroAdmin(admin.ModelAdmin):
+    list_display = ('id', 'hero_title', 'hero_description')
+    search_fields = ('hero_title', 'hero_description')
+    inlines = [SlideImageInline]
 
 @admin.register(SlideImage)
 class SlideImageAdmin(admin.ModelAdmin):
-    list_display = ("id", "slide_image")
+    list_display = ('id', 'hero', 'image')
+    search_fields = ('hero__hero_title',)
 
-@admin.register(SlideLogos)
-class SlideLogosAdmin(admin.ModelAdmin):
-    list_display = ("id", "slide_logo")
 
-@admin.register(StableLogos)
-class StableLogosAdmin(admin.ModelAdmin):
-    list_display = ("id", "hero_title", "sort_title", "sort_description")
+@admin.register(Logos)
+class LogosAdmin(admin.ModelAdmin):
+    list_display = ('id', 'stable_logo', 'sort_title', 'sort_description')
+    search_fields = ('sort_title', 'sort_description')
+
+
+@admin.register(SlideLogo)
+class SlideLogoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'slide_logo')
+    search_fields = ('logos__sort_title',)
+
+class ServiceInline(admin.TabularInline):
+    model = Service
+    extra = 1
 
 @admin.register(OurService)
 class OurServiceAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "description")
+    list_display = ('id', 'ourservice_description')
+    inlines = [ServiceInline]
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'description')
+    search_fields = ('title', 'description')
 
 @admin.register(WorkDescription)
 class WorkDescriptionAdmin(admin.ModelAdmin):
-    list_display = ("id", "work_description", "work_logo", "title", "description")  
+    list_display = ('id', 'title', 'description')
+    search_fields = ('title', 'description')
 
 @admin.register(CustomerReview)
 class CustomerReviewAdmin(admin.ModelAdmin):
-    list_display = ("id","name", "customer_images", "description", "rating")
+    list_display = ('id', 'name', 'rating')
+    search_fields = ('name', 'description')
+    list_filter = ('rating',)
 
 @admin.register(FAQ)
 class FAQAdmin(admin.ModelAdmin):
-    list_display = ("id", "question", "answer")
+    list_display = ('id', 'question', 'answer')
+    search_fields = ('question', 'answer')
