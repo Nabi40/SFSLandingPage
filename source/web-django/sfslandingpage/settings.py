@@ -40,8 +40,9 @@ INSTALLED_APPS = [
 
     "rest_framework",
     "hero",
-    "aboutUss"
+    "aboutUss",
     # 'modeladmin_reorder',
+    'team'
     
 
 ]
@@ -153,3 +154,16 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+
+
+
+# EMAIL CONFIGURATION
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.eltechlabs.com'  # This depends on your SMTP server
+EMAIL_PORT = 587  # or 465 for SSL
+EMAIL_USE_TLS = True  # or False if using SSL
+EMAIL_HOST_USER = 'mahamudun.nabi@smartfieldservice.com'
+EMAIL_HOST_PASSWORD = 'Dominos@25'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

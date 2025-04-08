@@ -8,6 +8,9 @@ from .views import (
     WorkDescriptionViewSet,
     CustomerReviewViewSet,
     FAQViewSet,
+    InquiryViewSet,
+    OfficeViewSet,
+    SubscribeViewSet
 )
 
 router = DefaultRouter()
@@ -18,6 +21,11 @@ router.register(r'ourservice', OurServiceViewSet, basename='ourservice')
 router.register(r'workdescription', WorkDescriptionViewSet, basename='workdescription')
 router.register(r'customerreview', CustomerReviewViewSet, basename='customerreview')
 router.register(r'faq', FAQViewSet, basename='faq')
+router.register(r'inquiry', InquiryViewSet, basename='inquiry')
+router.register(r'Office', OfficeViewSet, basename='Office')
+router.register(r'Subscribe', SubscribeViewSet, basename='Subscribe')
+
+
 
 
 urlpatterns = [

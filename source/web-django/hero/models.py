@@ -77,3 +77,22 @@ class FAQ(models.Model):
         return f"{self.question} - {self.answer}"
 
 
+class Inquiry(models.Model):
+    full_name = models.CharField(max_length=100)
+    company_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=20)
+    message = models.TextField()
+
+    def __str__(self):
+        return self.full_name
+    
+
+class Office(models.Model):
+    address = models.CharField(max_length=200)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=20)
+
+
+class Subscribe(models.Model):
+    email = models.EmailField()

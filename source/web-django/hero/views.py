@@ -1,6 +1,8 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
-from .models import hero, Logos, OurService, WorkDescription, CustomerReview, FAQ, SlideImage, SlideLogo, Service
+from .models import (hero, Logos, OurService, WorkDescription,
+                      CustomerReview, FAQ, SlideImage, SlideLogo,
+                        Service, Inquiry, Office, Subscribe)
 from .serializers import (
     heroSerializer,
     LogosSerializer,
@@ -10,7 +12,10 @@ from .serializers import (
     FAQSerializer,
     SlideImageSerializer,
     SlideLogoSerializer,
-    ServiceSerializer
+    ServiceSerializer,
+    InquirySerializer,
+    OfficeSerializer,
+    SubscribeSerializer
 )
 
 class heroViewSet(viewsets.ReadOnlyModelViewSet):
@@ -70,3 +75,41 @@ class CustomerReviewViewSet(viewsets.ReadOnlyModelViewSet):
 class FAQViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = FAQ.objects.all()
     serializer_class = FAQSerializer
+
+
+
+class InquiryViewSet(viewsets.ModelViewSet):
+    queryset = Inquiry.objects.all()
+    serializer_class = InquirySerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        inquiry = serializer.save()
+
+        # Send email to office
+        send_mail(
+            subject="New Inquiry from {}".format(inquiry.full_name),
+            message=f"""
+            Email: {inquiry.email}
+            Name: {inquiry.full_name}
+            Company: {inquiry.company_name}
+            Phone: {inquiry.phone_number}
+            message: {inquiry.message}
+            Phone: {inquiry.phone_number}
+            """,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=["mahamudun.nabi@smartfieldservice.com"],  # replace with your office mail
+            fail_silently=False,
+        )
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+
+class OfficeViewSet(viewsets.ModelViewSet):
+    queryset = Office.objects.all()
+    serializer_class = OfficeSerializer
+
+class SubscribeViewSet(viewsets.ModelViewSet):
+    queryset = Subscribe.objects.all()
+    serializer_class = SubscribeSerializer

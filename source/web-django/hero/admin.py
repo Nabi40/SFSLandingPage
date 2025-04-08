@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import hero, SlideImage, Logos, OurService, WorkDescription, CustomerReview, FAQ, SlideLogo, Service
+from .models import (hero, SlideImage, Logos, OurService,
+                      WorkDescription, CustomerReview, 
+                      FAQ, SlideLogo, Service, Office, 
+                      Inquiry, Subscribe)
 
 class SlideImageInline(admin.TabularInline):
     model = SlideImage
@@ -57,3 +60,21 @@ class CustomerReviewAdmin(admin.ModelAdmin):
 class FAQAdmin(admin.ModelAdmin):
     list_display = ('id', 'question', 'answer')
     search_fields = ('question', 'answer')
+
+
+@admin.register(Inquiry)
+class InquiryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'full_name', 'company_name', 'email', 'phone_number', 'message')
+    search_fields = ('full_name', 'company_name', 'email', 'phone_number', 'message')
+
+
+@admin.register(Office)
+class OfficAedmin(admin.ModelAdmin):
+    list_display = ('id', 'address', 'email', 'phone_number')
+    search_fields = ('address', 'email', 'phone_number')
+
+
+@admin.register(Subscribe)
+class SubscribeAedmin(admin.ModelAdmin):
+    list_display = ('id', 'email')
+    search_fields = ('email',)

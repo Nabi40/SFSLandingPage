@@ -1,48 +1,52 @@
 from rest_framework import serializers
-from .models import aboutUss, SlideImage, MissionVision, Value, ExecutiveTeam
+from .models import aboutUss, SlideImage, MissionVision, Value, ValueDetail, ExecutiveTeam
+
 
 class SlideImageSerializer(serializers.ModelSerializer):
-    image_url = serializers.SerializerMethodField()
-
     class Meta:
         model = SlideImage
-        fields = ["id", "image", "image_url"]
+        fields = '__all__'
 
-    def get_image_url(self, obj):
-        request = self.context.get("request")
-        return request.build_absolute_uri(obj.image.url) if obj.image else None
+
+class aboutUssSerializer(serializers.ModelSerializer):
+    slide_images = SlideImageSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = aboutUss
+        fields = '__all__'
 
 
 class MissionVisionSerializer(serializers.ModelSerializer):
     class Meta:
         model = MissionVision
-        fields = ["our_mission", "our_vision"]
+        fields = '__all__'
+
+
+class ValueDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ValueDetail
+        fields = '__all__'
 
 
 class ValueSerializer(serializers.ModelSerializer):
+    value_details = ValueDetailSerializer(many=True, read_only=True)
+
     class Meta:
         model = Value
-        fields = ["id", "title", "description"]
+        fields = ('value_description', 'value_details')
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        # Reorder the dict so "value_description" comes first
+        reordered = {
+            'value_description': rep['value_description'],
+            'value_details': rep['value_details'],
+        }
+        return reordered
+
 
 
 class ExecutiveTeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExecutiveTeam
-        fields = ["id", "name", "position", "description", "profile_image"]
-
-
-class aboutUssSerializer(serializers.ModelSerializer):  # Kept "aboutUss" as per your preference
-    banner = serializers.SerializerMethodField()
-    mission = MissionVisionSerializer(many=True,  read_only=True)  # Changed to match the related name
-    values = ValueSerializer(many=True)  # Should match the related name of the Value model
-    executive_team = ExecutiveTeamSerializer(many=True)
-
-    class Meta:
-        model = aboutUss
-        fields = "__all__"
-
-    def get_banner(self, obj):
-        return {
-            "description": obj.about_description,
-            "slide_images": SlideImageSerializer(obj.slide_images.all(), many=True, context=self.context).data
-        }
+        fields = '__all__'

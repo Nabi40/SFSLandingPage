@@ -21,15 +21,21 @@ from rest_framework.routers import DefaultRouter
 
 from hero.views import heroViewSet  
 from aboutUss.views import aboutUssViewSet
-
+from team.views import AllTeamViewSet 
 
 # Initialize the router
 router = DefaultRouter()
 router.register(r'hero', heroViewSet, basename='hero')
 router.register(r'about', aboutUssViewSet, basename='aboutUss')
+router.register(r'team', AllTeamViewSet, basename='AllTeam')
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api/', include('hero.urls')),
-    # path('api/', include(router.urls)),
+    path('hero_api/', include('hero.urls')),
+    path('about_api/', include('aboutUss.urls')),
+    path('team_api/', include('team.urls')),
+
+    
+    
+    
 ]

@@ -1,68 +1,45 @@
 from django.contrib import admin
-from .models import aboutUss, SlideImage, MissionVision, Value, ExecutiveTeam
+from .models import aboutUss, SlideImage, MissionVision, Value, ValueDetail, ExecutiveTeam
 
 
 class SlideImageInline(admin.TabularInline):
     model = SlideImage
     extra = 1
-    show_change_link = True  # Allows editing from inline
-
-
-class MissionVisionInline(admin.StackedInline):
-    model = MissionVision
-    extra = 1
-    show_change_link = True
-
-
-class ValueInline(admin.StackedInline):
-    model = Value
-    extra = 1
-    show_change_link = True
-
-
-class ExecutiveTeamInline(admin.StackedInline):
-    model = ExecutiveTeam
-    extra = 1
-    show_change_link = True
 
 
 @admin.register(aboutUss)
-class aboutUssAdmin(admin.ModelAdmin):
+class AboutUssAdmin(admin.ModelAdmin):
     list_display = ('id', 'about_description')
-    search_fields = ('about_description',)
-    inlines = [SlideImageInline, MissionVisionInline, ValueInline, ExecutiveTeamInline]
-
-    # Optional: Add readonly fields or custom admin form handling
-    def save_model(self, request, obj, form, change):
-        obj.save()
-
-    def delete_model(self, request, obj):
-        obj.delete()
-
-
-@admin.register(SlideImage)
-class SlideImageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'about_uss', 'image')
-    search_fields = ('about_uss__about_description',)
-    list_filter = ('about_uss',)
+    inlines = [SlideImageInline]
 
 
 @admin.register(MissionVision)
 class MissionVisionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'about_uss', 'our_mission', 'our_vision')
-    search_fields = ('our_mission', 'our_vision')
-    list_filter = ('about_uss',)
+    list_display = ('id', 'our_mission', 'our_vision')
+
+
+class ValueDetailInline(admin.TabularInline):
+    model = ValueDetail
+    extra = 1
 
 
 @admin.register(Value)
 class ValueAdmin(admin.ModelAdmin):
-    list_display = ('id', 'about_uss', 'title', 'description')
-    search_fields = ('title',)
-    list_filter = ('about_uss',)
+    list_display = ('id', 'value_description')
+    inlines = [ValueDetailInline]
 
 
 @admin.register(ExecutiveTeam)
 class ExecutiveTeamAdmin(admin.ModelAdmin):
-    list_display = ('id', 'about_uss', 'name', 'position', 'description', 'profile_image')
-    search_fields = ('name', 'position', 'description')
-    list_filter = ('about_uss',)
+    list_display = ('id', 'name', 'position', 'description', 'profile_image')
+
+
+# SlideImage and ValueDetail are already managed inline, but you can still register them if needed
+@admin.register(SlideImage)
+class SlideImageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'about_uss', 'image')
+
+
+@admin.register(ValueDetail)
+class ValueDetailAdmin(admin.ModelAdmin):
+    list_display = ('id', 'Value', 'title', 'description')

@@ -16,17 +16,18 @@ class SlideImage(models.Model):
 
 
 class MissionVision(models.Model):
-    about_uss = models.ForeignKey(aboutUss, related_name="mission", on_delete=models.CASCADE)
     our_mission = models.CharField(max_length=255, default="Default mission statement")
     our_vision = models.CharField(max_length=255, default="Default vision statement")
 
     def __str__(self):
-        return f"{self.our_mission} | {self.our_vision}"
+        return f"{self.our_mission} - {self.our_vision}"
 
 class Value(models.Model):
-    about_uss = models.ForeignKey(aboutUss, related_name="values", on_delete=models.CASCADE)
     value_description = models.CharField(max_length=255, default="Default statement")
 
+
+class ValueDetail(models.Model):
+    Value = models.ForeignKey("Value", related_name="value_details", on_delete=models.CASCADE)
     title = models.CharField(max_length=50, default="Default statement")
     description = models.CharField(max_length=255, default="Default statement")
 
@@ -35,7 +36,6 @@ class Value(models.Model):
 
 
 class ExecutiveTeam(models.Model):
-    about_uss = models.ForeignKey(aboutUss, related_name="executive_team", on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     position = models.CharField(max_length=100)
     description = models.CharField(max_length=255, default="description description ")
