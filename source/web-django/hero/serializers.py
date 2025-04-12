@@ -1,16 +1,10 @@
 from rest_framework import serializers
-from .models import (hero, SlideImage, Logos, SlideLogo, OurService,
+from .models import (hero, Logos, SlideLogo, OurService,
                       WorkDescription, CustomerReview, FAQ, Service,
                      Inquiry, Office, Subscribe
 )
-class SlideImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SlideImage
-        fields = "__all__"
 
 class heroSerializer(serializers.ModelSerializer):
-    slide_images = SlideImageSerializer(many=True, read_only=True)
-
     class Meta:
         model = hero
         fields = "__all__"

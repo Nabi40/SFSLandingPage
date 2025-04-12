@@ -1,19 +1,15 @@
 from django.db import models
 
 class hero(models.Model):
-    cover_image = models.ImageField(upload_to="cover_images/")
     hero_title = models.CharField(max_length=255, default="Default description statement")
     hero_description = models.CharField(max_length=255, default="Default description statement")
+    image_mobile = models.ImageField(upload_to="image_mobile/", default='default_image.jpg')
+    image_lgMobile = models.ImageField(upload_to="image_lgMobile/", default='default_image.jpg')
+    image_desktop = models.ImageField(upload_to="image_desktop/", default='default_image.jpg')
+    button_link = models.CharField(max_length=255, default="http//###########")
 
     def __str__(self):
-        return f"{self.cover_image} - {self.hero_title} - {self.hero_description}"
-
-class SlideImage(models.Model):
-    image = models.ImageField(upload_to="slide_images/")
-    hero = models.ForeignKey("hero", related_name="slide_images", on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.image.url if self.image else 'No Image'}"
+        return f" {self.hero_title} - {self.hero_description} - {self.image_mobile.url} - {self.image_lgMobile.url} - {self.image_desktop.url}"
     
 
 class Logos(models.Model):

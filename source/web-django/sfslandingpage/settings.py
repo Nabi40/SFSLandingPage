@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,29 +41,13 @@ INSTALLED_APPS = [
     "rest_framework",
     "hero",
     "aboutUss",
-    # 'modeladmin_reorder',
     'team'
     
 
 ]
 
 
-MODELADMIN_REORDER = (
-    {
-        'app': 'hero',  # usually lowercase
-        'models': [
-            'hero.Heros',
-            # 'hero.CustomerReview',
-            # 'hero.Faqs',
-            
-            # 'hero.OurServices',
-            # 'hero.SlideImages',
-            # 'hero.SlideLogos',
-            # 'hero.StableLogos',
-            # 'hero.WorkDescriptions',
-        ]
-    },
-)
+
 
 
 
@@ -76,6 +60,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+
 ]
 
 ROOT_URLCONF = "sfslandingpage.urls"
@@ -102,16 +88,36 @@ WSGI_APPLICATION = "sfslandingpage.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'SFS',
+#         'USER': 'postgres',
+#         'PASSWORD': 'Dominos@25',
+#         'HOST': 'localhost',  # Replace with your PostgreSQL server's address if necessary
+#         'PORT': '5432',          # Leave empty to use the default PostgreSQL port (usually 5432)
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'SFS',
-        'USER': 'postgres',
-        'PASSWORD': 'Dominos@25',
-        'HOST': 'localhost',  # Replace with your PostgreSQL server's address if necessary
-        'PORT': '5432',          # Leave empty to use the default PostgreSQL port (usually 5432)
+        'NAME': os.environ.get('DB_NAME', 'mydb'),
+        'USER': os.environ.get('DB_USER', 'myuser'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'mypassword'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
+
+
+
+
+
+
+
+
+
 
 
 # Password validation

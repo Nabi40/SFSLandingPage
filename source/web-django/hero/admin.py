@@ -1,23 +1,15 @@
 from django.contrib import admin
-from .models import (hero, SlideImage, Logos, OurService,
+from .models import (hero, Logos, OurService,
                       WorkDescription, CustomerReview, 
                       FAQ, SlideLogo, Service, Office, 
                       Inquiry, Subscribe)
 
-class SlideImageInline(admin.TabularInline):
-    model = SlideImage
-    extra = 1
+
 
 @admin.register(hero)
 class heroAdmin(admin.ModelAdmin):
-    list_display = ('id', 'hero_title', 'hero_description')
-    search_fields = ('hero_title', 'hero_description')
-    inlines = [SlideImageInline]
-
-@admin.register(SlideImage)
-class SlideImageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'hero', 'image')
-    search_fields = ('hero__hero_title',)
+    list_display = ('id', 'hero_title', 'hero_description', 'image_mobile', 'image_lgMobile', 'image_desktop', 'button_link')
+    search_fields = ('hero_title', 'hero_description', 'image_mobile', 'image_lgMobile', 'image_desktop', 'button_link')
 
 
 @admin.register(Logos)

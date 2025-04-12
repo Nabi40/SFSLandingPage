@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .models import (hero, Logos, OurService, WorkDescription,
-                      CustomerReview, FAQ, SlideImage, SlideLogo,
+                      CustomerReview, FAQ, SlideLogo,
                         Service, Inquiry, Office, Subscribe)
 from .serializers import (
     heroSerializer,
@@ -10,7 +10,6 @@ from .serializers import (
     WorkDescriptionSerializer,
     CustomerReviewSerializer,
     FAQSerializer,
-    SlideImageSerializer,
     SlideLogoSerializer,
     ServiceSerializer,
     InquirySerializer,
@@ -21,18 +20,6 @@ from .serializers import (
 class heroViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = hero.objects.all()
     serializer_class = heroSerializer
-
-    def get_object(self):
-        return self.queryset.first()
-
-    def list(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
-
-class SlideImageListView(viewsets.ReadOnlyModelViewSet):
-    queryset = SlideImage.objects.all()
-    serializer_class = SlideImageSerializer
 
 class LogosViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Logos.objects.all()
