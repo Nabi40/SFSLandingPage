@@ -1,5 +1,51 @@
-# Virtual env
-venv/
-env/
-ENV/
-.venv/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+media/
+staticfiles/  # if you use collectstatic in production
+local_settings.py
+.env
+
+# Django migrations (optional: keep if you want to version migrations)
+**/migrations/
+!**/migrations/__init__.py  # Keep init files
+
+# If you're using PostgreSQL socket files or dumps
+*.pgsql
+*.psql
+*.sql
+
+# VSCode or other editor folders
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# macOS/Linux/Windows system clutter
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*
+
+# Docker
+*.pid
+*.seed
+*.bak
+*.backup
+docker-compose.override.yml
+*.tar
+__docker_cache__/
