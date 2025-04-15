@@ -39,7 +39,6 @@ Thumbs.db
 
 # Environment
 .env
-.env.*
 
 # Docker
 *.pid
