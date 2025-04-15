@@ -29,3 +29,5 @@ class AllTeamAdmin(admin.ModelAdmin):
     list_display = ('id', 'allteam', 'name', 'position', 'profile_image')
     list_filter = ('position',)
     search_fields = ('name', 'position')
+
+    
