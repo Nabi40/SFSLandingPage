@@ -22,6 +22,7 @@ from rest_framework.routers import DefaultRouter
 from hero.views import heroViewSet  
 from aboutUss.views import aboutUssViewSet
 from team.views import AllTeamViewSet 
+from trackdata.views import track_visit_api
 
 # Initialize the router
 router = DefaultRouter()
@@ -34,8 +35,8 @@ urlpatterns = [
     path('hero_api/', include('hero.urls')),
     path('about_api/', include('aboutUss.urls')),
     path('team_api/', include('team.urls')),
+    path('track-visit_api/', track_visit_api, name='track-visit'),
 
-    
-    
+
     
 ]

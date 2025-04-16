@@ -41,9 +41,9 @@ INSTALLED_APPS = [
     "rest_framework",
     "hero",
     "aboutUss",
-    'team'
+    'team', 
+    'trackdata'
     
-
 ]
 
 

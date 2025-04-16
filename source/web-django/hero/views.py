@@ -44,9 +44,12 @@ class OurServiceViewSet(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         instance = self.get_object()
+        if instance is None:
+            return Response({"detail": "No OurService object found."}, status=404)
+
         response_data = {
             "ourservice_description": instance.ourservice_description,
-            "service": ServiceSerializer(instance.service.all(), many=True).data  # Fetch related service objects
+            "service": ServiceSerializer(instance.service.all(), many=True).data
         }
         return Response(response_data)
 
