@@ -7,6 +7,7 @@ class hero(models.Model):
     image_lgMobile = models.ImageField(upload_to="image_lgMobile/", default='default_image.jpg')
     image_desktop = models.ImageField(upload_to="image_desktop/", default='default_image.jpg')
     button_link = models.CharField(max_length=255, default="http//###########")
+    button = models.CharField(max_length=255, default="JOIN US")
 
     def __str__(self):
         return f" {self.hero_title} - {self.hero_description} - {self.image_mobile.url} - {self.image_lgMobile.url} - {self.image_desktop.url}"

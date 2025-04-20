@@ -1,21 +1,26 @@
+from django.db import models
 import string
 import random
-from django.db import models
 
-def generate_random_id(length=16):
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+def generate_random_id():
+    characters = string.ascii_letters + string.digits
+    return ''.join(random.choices(characters, k=16))
 
-class SiteVisitReferences(models.Model):
-    id = models.CharField(primary_key=True, max_length=16, default=generate_random_id, editable=False)
-    source = models.CharField(max_length=255)
+class Reference(models.Model):
+    id = models.CharField(primary_key=True, max_length=16, default=generate_random_id, editable=False, unique=True)
+    source = models.CharField(max_length=255, blank=False)
     specifics = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.source} - {self.id}"
+        return f"{self.id} - {self.source}"
 
-class ReferenceVisitLogs(models.Model):
-    visit_date = models.DateTimeField(auto_now_add=True)
-    visit_ref = models.ForeignKey(SiteVisitReferences, on_delete=models.CASCADE, related_name='visits')
+
+class AnotherModel(models.Model):
+    name = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Visit on {self.visit_date} from {self.visit_ref.id}"
+        return self.name

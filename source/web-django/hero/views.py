@@ -62,6 +62,13 @@ class WorkDescriptionGroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = WorkDescriptionGroup.objects.all()
     serializer_class = WorkDescriptionGroupSerializer
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        if queryset.exists():
+            serializer = self.get_serializer(queryset.first())
+            return Response(serializer.data)
+        return Response({})
+
 
 class WorkDescriptionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = WorkDescription.objects.all()

@@ -1,25 +1,41 @@
 from django.contrib import admin
-from .models import SiteVisitReferences, ReferenceVisitLogs
+from .models import Reference, AnotherModel
 
-class ReadOnlyAdmin(admin.ModelAdmin):
-    readonly_fields = [field.name for field in SiteVisitReferences._meta.fields]
-    list_display = [field.name for field in SiteVisitReferences._meta.fields]
+@admin.register(Reference)
+class ReferenceAdmin(admin.ModelAdmin):
+    list_display = ('count', 'id', 'source', 'specifics', 'created_at', 'updated_at')
+    search_fields = ('id', 'source', 'specifics')
+    readonly_fields = ('id', 'source', 'specifics', 'created_at', 'updated_at')
 
-    def has_add_permission(self, request):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-class ReadOnlyLogAdmin(admin.ModelAdmin):
-    readonly_fields = [field.name for field in ReferenceVisitLogs._meta.fields]
-    list_display = [field.name for field in ReferenceVisitLogs._meta.fields]
+    def count(self, obj):
+        return Reference.objects.filter(created_at__lte=obj.created_at).count()
+    count.short_description = 'Entry No.'
 
     def has_add_permission(self, request):
         return False
 
-    def has_delete_permission(self, request, obj=None):
+    def has_change_permission(self, request, obj=None):
         return False
 
-admin.site.register(SiteVisitReferences, ReadOnlyAdmin)
-admin.site.register(ReferenceVisitLogs, ReadOnlyLogAdmin)
+    def has_delete_permission(self, request, obj=None):
+        return True
+
+
+@admin.register(AnotherModel)
+class AnotherModelAdmin(admin.ModelAdmin):
+    list_display = ('count', 'name', 'created_at', 'updated_at')
+    search_fields = ('name',)
+    readonly_fields = ('name', 'created_at', 'updated_at')
+
+    def count(self, obj):
+        return AnotherModel.objects.filter(created_at__lte=obj.created_at).count()
+    count.short_description = 'Entry No.'
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return True

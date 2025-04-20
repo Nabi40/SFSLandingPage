@@ -1,21 +1,37 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import SiteVisitReferences, ReferenceVisitLogs
-from .serializers import VisitTrackSerializer
+from .models import Reference, AnotherModel
+from .serializers import ReferenceSerializer, AnotherModelSerializer
 
-@api_view(['GET', 'POST'])
-def track_visit_api(request):
-    if request.method == 'GET':
-        return Response({"message": "Tracking endpoint ready"}, status=status.HTTP_200_OK)
 
-    serializer = VisitTrackSerializer(data=request.data)
+@api_view(['POST'])
+def reference_create_api(request):
+    serializer = ReferenceSerializer(data=request.data)
     if serializer.is_valid():
-        ref_id = serializer.validated_data['ref']
-        try:
-            ref = SiteVisitReferences.objects.get(id=ref_id)
-            ReferenceVisitLogs.objects.create(visit_ref=ref)
-            return Response({"message": "Visit logged successfully"}, status=status.HTTP_201_CREATED)
-        except SiteVisitReferences.DoesNotExist:
-            return Response({"error": "Invalid ref"}, status=status.HTTP_404_NOT_FOUND)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def reference_list_api(request):
+    references = Reference.objects.all()
+    serializer = ReferenceSerializer(references, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def another_model_create_api(request):
+    serializer = AnotherModelSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def another_model_list_api(request):
+    models = AnotherModel.objects.all()
+    serializer = AnotherModelSerializer(models, many=True)
+    return Response(serializer.data)

@@ -8,8 +8,8 @@ from .models import (hero, Logos, OurService,
 
 @admin.register(hero)
 class heroAdmin(admin.ModelAdmin):
-    list_display = ('id', 'hero_title', 'hero_description', 'image_mobile', 'image_lgMobile', 'image_desktop', 'button_link')
-    search_fields = ('hero_title', 'hero_description', 'image_mobile', 'image_lgMobile', 'image_desktop', 'button_link')
+    list_display = ('id', 'hero_title', 'hero_description', 'image_mobile', 'image_lgMobile', 'image_desktop', 'button_link', 'button')
+    search_fields = ('hero_title', 'hero_description', 'image_mobile', 'image_lgMobile', 'image_desktop', 'button_link', 'button')
 
 
 @admin.register(Logos)
