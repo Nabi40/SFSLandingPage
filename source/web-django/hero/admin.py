@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (hero, Logos, OurService,
                       WorkDescription, CustomerReview, 
                       FAQ, SlideLogo, Service, Office, 
-                      Inquiry, Subscribe)
+                      Inquiry, Subscribe, WorkDescriptionGroup)
 
 
 
@@ -37,10 +37,16 @@ class ServiceAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'description')
     search_fields = ('title', 'description')
 
+
 @admin.register(WorkDescription)
 class WorkDescriptionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'description')
-    search_fields = ('title', 'description')
+    list_display = ('title', 'description')
+    search_fields = ('title',)
+
+@admin.register(WorkDescriptionGroup)
+class WorkDescriptionGroupAdmin(admin.ModelAdmin):
+    list_display = ('id', 'work_description')
+    search_fields = ('work_description',)
 
 @admin.register(CustomerReview)
 class CustomerReviewAdmin(admin.ModelAdmin):
@@ -58,6 +64,19 @@ class FAQAdmin(admin.ModelAdmin):
 class InquiryAdmin(admin.ModelAdmin):
     list_display = ('id', 'full_name', 'company_name', 'email', 'phone_number', 'message')
     search_fields = ('full_name', 'company_name', 'email', 'phone_number', 'message')
+
+    # Make fields read-only in the detail view
+    readonly_fields = ('full_name', 'company_name', 'email', 'phone_number', 'message')
+
+    # Disable add and delete permissions
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+
+
 
 
 @admin.register(Office)

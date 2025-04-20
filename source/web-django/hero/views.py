@@ -1,8 +1,11 @@
+from rest_framework import status
+from django.conf import settings
+from django.core.mail import send_mail
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .models import (hero, Logos, OurService, WorkDescription,
                       CustomerReview, FAQ, SlideLogo,
-                        Service, Inquiry, Office, Subscribe)
+                        Service, Inquiry, Office, Subscribe, WorkDescriptionGroup)
 from .serializers import (
     heroSerializer,
     LogosSerializer,
@@ -14,7 +17,8 @@ from .serializers import (
     ServiceSerializer,
     InquirySerializer,
     OfficeSerializer,
-    SubscribeSerializer
+    SubscribeSerializer,
+    WorkDescriptionGroupSerializer
 )
 
 class heroViewSet(viewsets.ReadOnlyModelViewSet):
@@ -49,9 +53,14 @@ class OurServiceViewSet(viewsets.ReadOnlyModelViewSet):
 
         response_data = {
             "ourservice_description": instance.ourservice_description,
-            "service": ServiceSerializer(instance.service.all(), many=True).data
+            "service": ServiceSerializer(instance.service.all(), many=True, context={'request': request}).data
         }
         return Response(response_data)
+
+
+class WorkDescriptionGroupViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = WorkDescriptionGroup.objects.all()
+    serializer_class = WorkDescriptionGroupSerializer
 
 
 class WorkDescriptionViewSet(viewsets.ReadOnlyModelViewSet):

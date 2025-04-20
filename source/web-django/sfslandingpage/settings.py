@@ -14,8 +14,13 @@ from pathlib import Path
 from decouple import config,  Csv
 
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '/app/media'
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -42,7 +47,8 @@ INSTALLED_APPS = [
     "hero",
     "aboutUss",
     'team', 
-    'trackdata'
+    'trackdata',
+    'corsheaders',
     
 ]
 
@@ -57,6 +63,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+    'corsheaders.middleware.CorsMiddleware',
 
 
 ]
@@ -112,6 +120,20 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS') == 'True'
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'webmaster@localhost')
+
+
+
+
+from decouple import config
+from corsheaders.defaults import default_headers
+
+# CORS settings
+CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", default="").split(",")
+
+CORS_ALLOW_ALL_ORIGINS = config("CORS_ALLOW_ALL_ORIGINS", default="False") == "True"
+CORS_ALLOW_CREDENTIALS = config("CORS_ALLOW_CREDENTIALS", default="False") == "True"
+
+
 
 
 # Password validation

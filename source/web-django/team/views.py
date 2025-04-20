@@ -1,3 +1,4 @@
+from rest_framework.response import Response
 from rest_framework import viewsets
 from .models import OurTeam, Head, HeadTeam, AllTeamDescrip, AllTeam
 from .serializers import (
@@ -12,6 +13,12 @@ class OurTeamViewSet(viewsets.ModelViewSet):
     queryset = OurTeam.objects.all()
     serializer_class = OurTeamSerializer
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        if queryset.exists():
+            serializer = self.get_serializer(queryset.first())
+            return Response(serializer.data)
+        return Response({})
 
 class HeadViewSet(viewsets.ModelViewSet):
     queryset = Head.objects.all()

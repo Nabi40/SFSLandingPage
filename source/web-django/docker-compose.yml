@@ -3,7 +3,7 @@ services:
   django:
     build: .
     image: django-docker:0.0.1
-    command: ["sh", "-c", "./wait-for-it.sh db:5432 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+    command: ["sh", "-c", "chmod -R 755 /app/media && ./wait-for-it.sh db:5432 -- python manage.py makemigrations --noinput && python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"]
 
     ports:
       - "8000:8000"
@@ -18,7 +18,8 @@ services:
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
     volumes:
-      - .:/app  # Mount source for live code changes (optional)
+      - .:/app 
+      - ./media:/app/media  
 
   db:
     image: postgres:15

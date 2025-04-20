@@ -1,7 +1,7 @@
 from django.db import models
 
 class aboutUss(models.Model):  # Kept "aboutUss" as per your preference
-    about_description = models.CharField(max_length=255, default="Default description statement")
+    about_description = models.CharField(max_length=400, default="Default description statement")
 
     def __str__(self):
         return self.about_description
@@ -16,20 +16,20 @@ class SlideImage(models.Model):
 
 
 class MissionVision(models.Model):
-    our_mission = models.CharField(max_length=255, default="Default mission statement")
-    our_vision = models.CharField(max_length=255, default="Default vision statement")
+    our_mission = models.CharField(max_length=400, default="Default mission statement")
+    our_vision = models.CharField(max_length=400, default="Default vision statement")
 
     def __str__(self):
         return f"{self.our_mission} - {self.our_vision}"
 
 class Value(models.Model):
-    value_description = models.CharField(max_length=255, default="Default statement")
+    value_description = models.CharField(max_length=400, default="Default statement")
 
 
 class ValueDetail(models.Model):
     Value = models.ForeignKey("Value", related_name="value_details", on_delete=models.CASCADE)
     title = models.CharField(max_length=50, default="Default statement")
-    description = models.CharField(max_length=255, default="Default statement")
+    description = models.CharField(max_length=400, default="Default statement")
 
     def __str__(self):
         return self.title
@@ -38,7 +38,7 @@ class ValueDetail(models.Model):
 class ExecutiveTeam(models.Model):
     name = models.CharField(max_length=100)
     position = models.CharField(max_length=100)
-    description = models.CharField(max_length=255, default="description description ")
+    description = models.CharField(max_length=400, default="description description ")
     profile_image = models.ImageField(upload_to="profile_images/")
 
     def __str__(self):

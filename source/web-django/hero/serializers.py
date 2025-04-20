@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import (hero, Logos, SlideLogo, OurService,
                       WorkDescription, CustomerReview, FAQ, Service,
-                     Inquiry, Office, Subscribe
+                     Inquiry, Office, Subscribe, WorkDescriptionGroup
 )
 
 class heroSerializer(serializers.ModelSerializer):
@@ -37,7 +37,16 @@ class OurServiceSerializer(serializers.ModelSerializer):
 class WorkDescriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkDescription
-        fields = "__all__"
+        fields = ['work_logo', 'title', 'description']
+
+
+class WorkDescriptionGroupSerializer(serializers.ModelSerializer):
+    items = WorkDescriptionSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = WorkDescriptionGroup
+        fields = ['id', 'work_description', 'items']
+
 
 class CustomerReviewSerializer(serializers.ModelSerializer):
     class Meta:

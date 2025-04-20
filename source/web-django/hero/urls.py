@@ -10,7 +10,8 @@ from .views import (
     FAQViewSet,
     InquiryViewSet,
     OfficeViewSet,
-    SubscribeViewSet
+    SubscribeViewSet,
+    WorkDescriptionGroupViewSet,
 )
 
 router = DefaultRouter()
@@ -19,6 +20,7 @@ router.register(r'SlideLogo', SlideLogoViewSet, basename='SlideLogo')
 router.register(r'logos', LogosViewSet, basename='logos')
 router.register(r'ourservice', OurServiceViewSet, basename='ourservice')
 router.register(r'workdescription', WorkDescriptionViewSet, basename='workdescription')
+router.register(r'WorkDescriptionGroup', WorkDescriptionGroupViewSet, basename='SWorkDescriptionGroup')
 router.register(r'customerreview', CustomerReviewViewSet, basename='customerreview')
 router.register(r'faq', FAQViewSet, basename='faq')
 router.register(r'inquiry', InquiryViewSet, basename='inquiry')
